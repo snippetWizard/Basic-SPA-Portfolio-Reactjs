@@ -1,10 +1,13 @@
 import './App.css';
+import { useState } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
-import { darkTheme } from './utils/Themes';
+import { darkTheme, lightTheme } from './utils/Themes';
 import Navbar from './components/Navbar';
 import Hero from './components/HeroSection';
 import Skills from './components/Skills';
 import Education from './components/Education';
+import Projects from './components/Projects';
 
 
 const Body = styled.div`
@@ -22,9 +25,13 @@ const Body = styled.div`
 `
 
 function App() {
+const [darkMode, setDarkMode] = useState(true);
+const [openModal, setOpenModal] = useState({ state: false, project: null });
+console.log(openModal)
   return (
     <div className="App">
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+    <Router >
       <Navbar />
       <Body>
         <Hero />
@@ -32,7 +39,13 @@ function App() {
           <Skills />
           <Education />
         </Wrapper>
+        <Projects openModal={openModal} setOpenModal={setOpenModal} />
+        <Wrapper>
+            {/* <Education />
+            <Contact /> */}
+          </Wrapper>
       </Body>
+      </Router>
     </ThemeProvider>
   </div>
   )
